@@ -73,3 +73,9 @@ def test_disregard_instructions_blocked(checker):
     assert not res["safe"]
     assert "possible_prompt_injection" in res["flags"]
 
+
+def test_empty_string_guardrail(checker):
+    res = checker.check_input("")
+    assert not res["safe"]
+    assert "input_too_short" in res["flags"]
+
