@@ -146,3 +146,5 @@ class ConstitutionChecker:
             "flags": flags,
             "fallback_count": fallback_count,
         }
+
+# Constitution checker ensures prompt injection rejection and input boundaries
