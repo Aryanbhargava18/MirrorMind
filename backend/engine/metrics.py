@@ -41,6 +41,11 @@ class MetricsCollector:
             f"guardrail={'PASS' if metrics.get('guardrail_input_safe') else 'BLOCK'}"
         )
 
+    def reset(self) -> None:
+        """Clear recorded metrics history."""
+        with self._lock:
+            self._history.clear()
+
     def get_aggregates(self) -> dict:
         """Compute aggregate statistics across all recorded requests."""
         with self._lock:
