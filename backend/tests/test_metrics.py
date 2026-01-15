@@ -11,6 +11,15 @@ def test_metrics_empty_history():
     assert "No metrics recorded yet" in aggregates["message"]
 
 
+def test_metrics_reset():
+    collector = MetricsCollector()
+    collector.record({"total_latency_ms": 100.0, "eval_score": 0.8})
+    assert collector.get_aggregates()["total_requests"] == 1
+    collector.reset()
+    assert collector.get_aggregates()["total_requests"] == 0
+
+
+
 def test_metrics_record_and_aggregation():
     collector = MetricsCollector()
 
