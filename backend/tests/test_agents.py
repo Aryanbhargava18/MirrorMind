@@ -39,3 +39,9 @@ def test_synthesizer_fallback():
     assert "explanation" in res
     assert "confidence" in res
     assert res.get("_fallback") is True
+
+def test_agent_temperature_defaults():
+    from backend.config import AGENT_TEMPERATURES
+    assert "mapper" in AGENT_TEMPERATURES
+    assert "investigator" in AGENT_TEMPERATURES
+
