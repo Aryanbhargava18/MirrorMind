@@ -46,3 +46,5 @@ CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1
 
 def has_api_key() -> bool:
     return LLM_PROVIDER != "fallback"
+
+# Temperature guidelines: lower values (0.2) favor determinism, higher (0.7) favor empathy
