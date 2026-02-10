@@ -89,3 +89,7 @@ def test_evaluator_empty_user_input(evaluator):
     assert len(result["failures"]) > 0
 
 
+
+def test_evaluator_score_precision(evaluator):
+    assert isinstance(evaluator.quality_threshold, float)
+
