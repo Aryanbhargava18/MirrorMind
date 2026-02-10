@@ -93,3 +93,8 @@ def test_evaluator_empty_user_input(evaluator):
 def test_evaluator_score_precision(evaluator):
     assert isinstance(evaluator.quality_threshold, float)
 
+
+def test_evaluator_threshold_comparison():
+    evaluator = KarpathyEvaluator(quality_threshold=0.7)
+    assert evaluator.quality_threshold == 0.7
+
