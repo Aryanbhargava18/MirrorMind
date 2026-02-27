@@ -125,3 +125,8 @@ def test_session_id_sanitization_alphanumeric():
     from backend.main import is_valid_query
     assert is_valid_query("session_123") is True
 
+
+def test_session_store_dict_type():
+    from backend.main import SESSION_STORE
+    assert isinstance(SESSION_STORE, dict)
+
