@@ -79,3 +79,8 @@ def test_empty_string_guardrail(checker):
     assert not res["safe"]
     assert "input_too_short" in res["flags"]
 
+
+def test_harmful_patterns_list():
+    from backend.engine.guardrails import HARMFUL_PATTERNS
+    assert len(HARMFUL_PATTERNS) >= 4
+
