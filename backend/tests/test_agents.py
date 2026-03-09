@@ -45,3 +45,10 @@ def test_agent_temperature_defaults():
     assert "mapper" in AGENT_TEMPERATURES
     assert "investigator" in AGENT_TEMPERATURES
 
+
+def test_mapper_decision_type_key():
+    from backend.agents.mapper import MapperAgent
+    agent = MapperAgent()
+    res = agent.fallback("test query")
+    assert "claims" in res
+
