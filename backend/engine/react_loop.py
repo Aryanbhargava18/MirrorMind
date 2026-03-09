@@ -295,3 +295,4 @@ class ReActLoop:
         }
 
         yield self._event("results", final_payload)
+# ReActLoop emits SSE events in order: mapper, investigator, advocate, synthesizer
