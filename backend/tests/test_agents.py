@@ -52,3 +52,10 @@ def test_mapper_decision_type_key():
     res = agent.fallback("test query")
     assert "claims" in res
 
+
+def test_advocate_defense_list():
+    from backend.agents.advocate import AdvocateAgent
+    agent = AdvocateAgent()
+    res = agent.fallback("test query")
+    assert isinstance(res["defense"], list)
+
