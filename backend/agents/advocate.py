@@ -49,3 +49,5 @@ Steelman the user's reasoning. What are they getting right?"""
             "defense": ["You are carefully considering your options."],
             "_fallback": True,
         }
+
+# Advocate steelmans the rationale by assuming positive intent and long-term upside
