@@ -68,3 +68,5 @@ Synthesize the meta-pattern of this user's reasoning."""
             "archetypes": [],
             "_fallback": True,
         }
+
+# Synthesizer extracts archetypes and provides actionable questions for the decision maker
