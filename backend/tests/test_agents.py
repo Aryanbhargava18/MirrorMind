@@ -59,3 +59,10 @@ def test_advocate_defense_list():
     res = agent.fallback("test query")
     assert isinstance(res["defense"], list)
 
+
+def test_synthesizer_confidence_bounds():
+    from backend.agents.synthesizer import SynthesizerAgent
+    agent = SynthesizerAgent()
+    res = agent.fallback("test query")
+    assert 0 <= res.get("confidence", 0) <= 100
+
