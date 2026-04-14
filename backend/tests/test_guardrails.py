@@ -84,3 +84,8 @@ def test_harmful_patterns_list():
     from backend.engine.guardrails import HARMFUL_PATTERNS
     assert len(HARMFUL_PATTERNS) >= 4
 
+
+def test_gibberish_threshold_ratio():
+    from backend.engine.guardrails import GIBBERISH_THRESHOLD
+    assert 0.0 < GIBBERISH_THRESHOLD < 1.0
+
