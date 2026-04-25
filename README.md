@@ -1,12 +1,22 @@
-# MirrorMind — Cognitive Bias Investigator
+# MirrorMind — Enterprise AI Cognitive Bias Investigator
 
 > Paste your reasoning. Four adversarial AI agents find the blind spots you can't.
 
-MirrorMind is a multi-agent cognitive bias detector. Users describe their reasoning about any decision in plain language, and four specialized LLM agents analyze the *thinking process* — not the decision itself. The output is a mirror showing the user their own blind spots, not a recommendation.
+MirrorMind is a full-stack, production-hardened multi-agent reasoning platform. Users describe their reasoning about any decision in plain language, and four specialized LLM agents analyze the *thinking process* — not the decision itself. 
+
+Unlike standard "GPT wrappers," MirrorMind utilizes a specialized adversarial pipeline, a real-time SSE streaming backend, and an autonomous "Karpathy" self-correction loop to guarantee high-quality, hallucination-free analysis.
+
+## Core Features & Engineering Impact
+
+- **Adversarial Multi-Agent Pipeline:** Replaces unreliable zero-shot prompting with 4 isolated agents (Mapper, Investigator, Advocate, Synthesizer). The Investigator is strictly constrained to *only* flag biases using exact quotes from the user's input.
+- **Karpathy Self-Correction Loop:** An autonomous `evaluator` scores the agent trace across 5 weighted dimensions (completeness, evidence-binding, defense quality, coherence). If the score falls below a confidence threshold, the pipeline automatically re-runs.
+- **Two-Layer Guardrails:** A `ConstitutionChecker` validates input safety (blocking prompt injections, gibberish, and harmful content) and verifies output completeness before streaming to the client.
+- **Sub-Second TTFT via SSE:** The FastAPI backend streams agent states and JSON traces via Server-Sent Events (SSE) to prevent client-side timeouts during complex, long-running LLM workloads.
+- **Observability:** A built-in `/api/metrics` endpoint aggregates per-agent latency, eval scores, fallback rates, and guardrail block rates in real-time.
 
 ## Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────┐
 │                   React Frontend                     │
 │  DecisionInput → AgentDebate → ResultsSection        │
@@ -17,38 +27,32 @@ MirrorMind is a multi-agent cognitive bias detector. Users describe their reason
 ┌─────────────────────────────────────────────────────┐
 │               FastAPI Backend (SSE)                  │
 │                                                      │
+│  [Input Guardrail] → Constitution Checker            │
+│          │                                           │
 │  ┌──────────┐  ┌──────────────┐  ┌────────────┐     │
 │  │  Mapper   │→│ Investigator │→│  Advocate   │     │
 │  │ (Agent 1) │  │  (Agent 2)   │  │ (Agent 3)  │     │
-│  │           │  │  Adversarial │  │ Steelman   │     │
 │  └──────────┘  └──────────────┘  └────────────┘     │
-│        │              │                │              │
-│        └──────────────┴────────────────┘              │
-│                       ▼                               │
-│              ┌──────────────┐                        │
-│              │ Synthesizer  │                        │
-│              │  (Agent 4)   │                        │
-│              │ Meta-pattern │                        │
-│              └──────────────┘                        │
+│        │              │                │             │
+│        └──────────────┴────────────────┘             │
+│                       ▼                              │
+│              ┌──────────────┐                       │
+│              │ Synthesizer  │                       │
+│              │  (Agent 4)   │                       │
+│              └──────────────┘                       │
+│                       ▼                              │
+│  [Karpathy Eval] → Score > 0.65? (If NO → Retry)     │
+│                       ▼                              │
+│  [Output Guard] → Validate Completeness              │
 └─────────────────────────────────────────────────────┘
 ```
 
-## The Four Agents
-
-| Agent | Role | Key Constraint |
-|-------|------|----------------|
-| **Mapper** | Extracts claims, values, and assumptions | No judgment — extraction only |
-| **Investigator** | Flags cognitive biases adversarially | Must quote user's exact words as evidence |
-| **Advocate** | Steelmans the user's instinct | Defends gut feeling before it's critiqued |
-| **Synthesizer** | Identifies the meta-pattern of reasoning | Produces "The Question You're Not Asking" |
-
 ## Tech Stack
 
-- **Frontend:** React 18 + Vite + Tailwind CSS
-- **Backend:** FastAPI + Python 3.11+
-- **LLM:** Groq (via `groq` Python client) for ultra-fast Llama-3 inference
+- **Frontend:** React 18, Vite, Tailwind CSS, Framer Motion, GSAP
+- **Backend:** FastAPI, Python 3.11+, Uvicorn/Gunicorn
+- **LLM Routing:** Multi-provider support (Groq Llama-3, OpenAI GPT-4o, Gemini 2.0 Flash) with automatic rate-limit failover
 - **Streaming:** Server-Sent Events (SSE)
-- **Styling:** Custom design system (Fraunces + DM Sans typography, glassmorphism, micro-animations)
 
 ## Getting Started
 
@@ -56,7 +60,7 @@ MirrorMind is a multi-agent cognitive bias detector. Users describe their reason
 
 - Node.js 18+
 - Python 3.11+
-- A Groq API key
+- A Groq API key (or OpenAI/Gemini)
 
 ### Setup
 
@@ -79,7 +83,7 @@ cp .env.example .env
 # Add your GROQ_API_KEY to .env
 ```
 
-### Run
+### Run Locally
 
 ```bash
 # Terminal 1 — Backend
@@ -95,40 +99,25 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ## Project Structure
 
-```
+```text
 ├── src/
 │   ├── api/client.js           # SSE streaming client
-│   ├── engine/orchestrator.js  # Frontend agent pipeline orchestrator
-│   ├── hooks/useScrollReveal.js
-│   ├── components/
-│   │   ├── HeroSection.jsx     # Landing page hero
-│   │   ├── DecisionInput.jsx   # User reasoning input
-│   │   ├── AgentDebate.jsx     # Real-time agent analysis view
-│   │   ├── AgentCard.jsx       # Individual agent output card
-│   │   ├── ResultsSection.jsx  # Bento grid analysis results
-│   │   ├── TopPick.jsx         # "The Question You're Not Asking"
-│   │   ├── TradeOffs.jsx       # Evidence vs Instinct view
-│   │   ├── ReasoningTrace.jsx  # Full agent reasoning trace
-│   │   └── ...
-│   └── App.jsx                 # State machine (idle → analyzing → results)
+│   ├── engine/orchestrator.js  # Frontend agent pipeline state machine
+│   ├── components/             # React UI components (Glassmorphism, animations)
+│   └── App.jsx                 
 │
 ├── backend/
-│   ├── main.py                 # FastAPI server + SSE endpoints
+│   ├── main.py                 # FastAPI server + SSE endpoints + /api/metrics
 │   ├── engine/
-│   │   └── react_loop.py       # Multi-agent orchestration loop
+│   │   ├── react_loop.py       # Multi-agent orchestration loop
+│   │   ├── evaluator.py        # Karpathy self-correction loop
+│   │   ├── guardrails.py       # Input/Output Constitution checker
+│   │   └── metrics.py          # Per-request and aggregate latency/eval tracking
 │   ├── agents/
-│   │   ├── base.py             # BaseAgent abstraction (LLM interface)
+│   │   ├── base.py             # LLM provider routing & auto-failover
 │   │   ├── mapper.py           # Agent 1: Claim extraction
-│   │   ├── investigator.py     # Agent 2: Bias detection
+│   │   ├── investigator.py     # Agent 2: Evidence-bound Bias detection
 │   │   ├── advocate.py         # Agent 3: Steelmanning
 │   │   └── synthesizer.py      # Agent 4: Meta-pattern synthesis
-│   └── config.py               # Environment + API key management
+│   └── config.py               # Environment configuration
 ```
-
-## Key Design Decisions
-
-1. **Adversarial by design** — The Investigator agent can only flag a bias if it quotes the user's exact words. This prevents generic AI advice.
-2. **Streaming SSE** — Each agent's output streams to the UI in real-time as it completes, giving immediate feedback instead of a loading spinner.
-3. **Structured JSON schemas** — Every agent is constrained to a specific JSON output format, preventing hallucination and enabling reliable UI rendering.
-4. **Phase-based state machine** — The frontend uses a clean `idle → analyzing → results` state machine instead of complex routing.
-
