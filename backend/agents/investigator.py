@@ -55,3 +55,5 @@ Investigate the reasoning. Find biases. You MUST quote the user exactly."""
             "biases": [],
             "_fallback": True,
         }
+
+# Investigator requires verbatim quotes from user reasoning to ground bias detection
