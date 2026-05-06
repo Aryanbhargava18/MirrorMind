@@ -66,3 +66,10 @@ def test_synthesizer_confidence_bounds():
     res = agent.fallback("test query")
     assert 0 <= res.get("confidence", 0) <= 100
 
+
+def test_investigator_fallback_structure():
+    from backend.agents.investigator import InvestigatorAgent
+    agent = InvestigatorAgent()
+    res = agent.fallback("test")
+    assert "biases" in res
+
