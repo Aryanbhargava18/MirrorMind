@@ -91,3 +91,11 @@ def test_analyze_request_whitespace_trimming():
     req = AnalyzeRequest(message="   I am choosing between two offers   ")
     assert req.get_query() == "I am choosing between two offers"
 
+
+def test_has_api_key_helper():
+    from backend.config import has_api_key, LLM_PROVIDER
+    # should return bool consistent with LLM_PROVIDER
+    expected = (LLM_PROVIDER != "fallback")
+    assert has_api_key() == expected
+
+
