@@ -6,7 +6,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ── LLM ──
-# Supports OpenAI, Gemini, or Groq
+# Supported providers: OpenAI, Gemini, or Groq
+# Required environment variables:
+#   OPENAI_API_KEY: Key for OpenAI (e.g. gpt-4o-mini)
+#   GEMINI_API_KEY: Key for Google Gemini (e.g. gemini-2.0-flash)
+#   GROQ_API_KEY:   Key for Groq (e.g. llama-3.3-70b-versatile)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
