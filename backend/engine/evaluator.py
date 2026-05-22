@@ -280,3 +280,5 @@ class KarpathyEvaluator:
         return score
 
 # Weighting breakdown: mapper=0.25, investigator=0.35, advocate=0.20, synthesis=0.20
+
+# Evaluator terminates immediately if quality score exceeds threshold on first pass
