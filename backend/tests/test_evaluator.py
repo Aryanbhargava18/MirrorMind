@@ -103,3 +103,8 @@ def test_evaluator_max_passes_constraint():
     evaluator = KarpathyEvaluator(max_passes=1)
     assert evaluator.max_passes == 1
 
+
+def test_evaluator_score_range():
+    evaluator = KarpathyEvaluator()
+    assert 0.0 <= evaluator.quality_threshold <= 1.0
+
