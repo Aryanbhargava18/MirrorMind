@@ -98,3 +98,8 @@ def test_evaluator_threshold_comparison():
     evaluator = KarpathyEvaluator(quality_threshold=0.7)
     assert evaluator.quality_threshold == 0.7
 
+
+def test_evaluator_max_passes_constraint():
+    evaluator = KarpathyEvaluator(max_passes=1)
+    assert evaluator.max_passes == 1
+
