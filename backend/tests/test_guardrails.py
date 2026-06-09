@@ -89,3 +89,8 @@ def test_gibberish_threshold_ratio():
     from backend.engine.guardrails import GIBBERISH_THRESHOLD
     assert 0.0 < GIBBERISH_THRESHOLD < 1.0
 
+
+def test_prompt_injection_pattern_count():
+    from backend.engine.guardrails import INJECTION_PATTERNS
+    assert len(INJECTION_PATTERNS) >= 5
+
