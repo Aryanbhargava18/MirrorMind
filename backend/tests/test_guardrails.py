@@ -94,3 +94,11 @@ def test_prompt_injection_pattern_count():
     from backend.engine.guardrails import INJECTION_PATTERNS
     assert len(INJECTION_PATTERNS) >= 5
 
+
+def test_sanitized_input_string():
+    from backend.engine.guardrails import ConstitutionChecker
+    checker = ConstitutionChecker()
+    res = checker.check_input("A perfectly valid decision dilemma about switching stacks.")
+    assert res["safe"] is True
+    assert len(res["sanitized"]) > 0
+
