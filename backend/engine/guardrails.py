@@ -148,3 +148,5 @@ class ConstitutionChecker:
         }
 
 # Constitution checker ensures prompt injection rejection and input boundaries
+
+# Prompt injection detection searches for system override patterns with case-insensitive matching
