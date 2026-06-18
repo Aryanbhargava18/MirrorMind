@@ -24,6 +24,8 @@ HARMFUL_PATTERNS = [
 # ── Prompt injection patterns ────────────────────────────────────
 INJECTION_PATTERNS = [
     r"ignore (previous|all|above) instructions",
+    r"disregard (all |previous )?instructions",
+    r"bypass (safety|filters|rules)",
     r"you are now",
     r"new instructions:",
     r"system prompt",
