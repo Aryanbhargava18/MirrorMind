@@ -64,3 +64,10 @@ def test_rerank_with_intent_payload():
     data = res.json()
     assert "session_id" in data
     assert "trace" in data
+
+
+def test_analyze_request_whitespace_trimming():
+    from backend.main import AnalyzeRequest
+    req = AnalyzeRequest(message="   I am choosing between two offers   ")
+    assert req.get_query() == "I am choosing between two offers"
+

@@ -49,7 +49,7 @@ class AnalyzeRequest(BaseModel):
     overrides: dict = Field(default_factory=dict)
 
     def get_query(self) -> str:
-        return self.message or self.intent or ""
+        return (self.message or self.intent or "").strip()
 
 
 def _format_sse(event_name: str, payload: dict) -> str:
