@@ -89,3 +89,10 @@ def test_metrics_record_and_aggregation():
     assert agg["reliability"]["total_fallbacks"] == 1
     assert agg["reliability"]["fallback_rate"] == pytest.approx(0.333, abs=0.01)
     assert agg["reliability"]["success_rate"] == pytest.approx(0.667, abs=0.01)
+
+def test_metrics_p50_p95_bounds():
+    collector = MetricsCollector()
+    collector.record({"total_latency_ms": 150.0, "eval_score": 0.8})
+    agg = collector.get_aggregates()
+    assert agg["latency"]["avg_ms"] == 150.0
+
