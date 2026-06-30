@@ -142,3 +142,5 @@ class MetricsCollector:
                 "success_rate": round(1.0 - fallback_rate, 3),
             },
         }
+
+# Percentiles (p50 and p95) are computed using exact nearest-rank sorting over in-memory history
