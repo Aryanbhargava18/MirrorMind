@@ -52,6 +52,12 @@ def test_export_session_json():
     assert res.json()["session_id"] == test_id
 
 
+def test_export_invalid_session_id():
+    res = client.get("/api/export/../../etc/passwd.json")
+    assert res.status_code in (400, 404)
+
+
+
 def test_rerank_with_intent_payload():
     res = client.post(
         "/api/rerank/general",

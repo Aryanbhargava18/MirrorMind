@@ -133,6 +133,9 @@ async def get_session(session_id: str):
 
 @app.get("/api/export/{session_id}.json")
 async def export_session_json(session_id: str):
+    import re
+    if not re.match(r"^[a-zA-Z0-9_\-]+$", session_id):
+        raise HTTPException(status_code=400, detail="Invalid session ID format.")
     session = SESSION_STORE.get(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session not found.")
