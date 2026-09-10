@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 
 # ── Blocklist for harmful content ─────────────────────────────────
 HARMFUL_PATTERNS = [
-    r"\b(kill|murder|suicide|self[- ]?harm)\b",
+    r"\b(suicide|self[- ]?harm|murder|assassinate)\b",
+    r"\bkill\s+(myself|him|her|them|someone|everyone|people|anybody|somebody)\b",
     r"\b(how to (make|build) (a )?(bomb|weapon|explosive))\b",
     r"\b(illegal drug|synthesize|manufacture)\b",
 ]
