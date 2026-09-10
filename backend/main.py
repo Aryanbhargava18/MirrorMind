@@ -42,10 +42,14 @@ SESSION_STORE: dict[str, dict[str, Any]] = {}
 
 
 class AnalyzeRequest(BaseModel):
-    message: str
+    message: str = Field(default="")
+    intent: str | None = Field(default=None)
     session_dna: dict = Field(default_factory=dict)
     has_results: bool = False
     overrides: dict = Field(default_factory=dict)
+
+    def get_query(self) -> str:
+        return self.message or self.intent or ""
 
 
 def _format_sse(event_name: str, payload: dict) -> str:
@@ -54,9 +58,10 @@ def _format_sse(event_name: str, payload: dict) -> str:
 
 async def _collect_results(domain: str, request: AnalyzeRequest) -> dict:
     final_payload = None
+    query = request.get_query()
     async for item in react_loop.run(
         domain,
-        request.message,
+        query,
         request.session_dna,
         request.has_results,
         request.overrides,
@@ -87,9 +92,10 @@ async def debate(domain: str, request: AnalyzeRequest):
     """Stream the multi-agent analysis pipeline via SSE."""
 
     async def event_stream():
+        query = request.get_query()
         async for item in react_loop.run(
             domain,
-            request.message,
+            query,
             request.session_dna,
             request.has_results,
             request.overrides,
