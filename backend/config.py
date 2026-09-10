@@ -1,4 +1,4 @@
-"""TripSense — Configuration"""
+"""MirrorMind — Configuration"""
 
 import os
 from dotenv import load_dotenv
@@ -15,9 +15,11 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 if OPENAI_API_KEY and OPENAI_API_KEY != "your_key_here":
     LLM_PROVIDER = "openai"
     MODEL_ID = "gpt-4o-mini"
+    FALLBACK_MODEL_ID = os.getenv("OPENAI_FALLBACK_MODEL", "gpt-4o")
 elif GEMINI_API_KEY and GEMINI_API_KEY != "your_key_here":
     LLM_PROVIDER = "gemini"
     MODEL_ID = "gemini-2.0-flash"
+    FALLBACK_MODEL_ID = os.getenv("GEMINI_FALLBACK_MODEL", "gemini-1.5-flash")
 elif GROQ_API_KEY and GROQ_API_KEY != "your_key_here":
     LLM_PROVIDER = "groq"
     MODEL_ID = "llama-3.3-70b-versatile"
