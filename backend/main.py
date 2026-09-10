@@ -7,7 +7,15 @@ as a streaming SSE endpoint.
 from __future__ import annotations
 
 import json
+import os
+import sys
+from pathlib import Path
 from typing import Any
+
+# Ensure backend root is always in sys.path regardless of working directory
+BACKEND_DIR = Path(__file__).resolve().parent
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware

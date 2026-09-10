@@ -1,16 +1,23 @@
-"""TripSense — Base LLM Agent
+"""MirrorMind — Base LLM Agent
 
-Supports both OpenAI and Google Gemini.
+Supports Groq, OpenAI, and Google Gemini.
 Auto-detects which provider to use based on config.
 Structured JSON output with retry and fallback.
 """
 
 import json
 import logging
-from config import (
-    OPENAI_API_KEY, GEMINI_API_KEY, GROQ_API_KEY, MODEL_ID,
-    LLM_PROVIDER, AGENT_TEMPERATURES, has_api_key,
-)
+
+try:
+    from backend.config import (
+        OPENAI_API_KEY, GEMINI_API_KEY, GROQ_API_KEY, MODEL_ID,
+        LLM_PROVIDER, AGENT_TEMPERATURES, has_api_key,
+    )
+except ImportError:
+    from config import (
+        OPENAI_API_KEY, GEMINI_API_KEY, GROQ_API_KEY, MODEL_ID,
+        LLM_PROVIDER, AGENT_TEMPERATURES, has_api_key,
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -113,7 +120,10 @@ class BaseAgent:
     async def _call_groq(self, prompt: str) -> dict:
         """Call Groq API with automatic model failover on rate limits."""
         import asyncio
-        from config import FALLBACK_MODEL_ID
+        try:
+            from backend.config import FALLBACK_MODEL_ID
+        except ImportError:
+            from config import FALLBACK_MODEL_ID
         client = self._get_groq()
 
         def _sync_call(model_id):

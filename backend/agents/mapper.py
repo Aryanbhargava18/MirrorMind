@@ -5,7 +5,10 @@ Temperature: 0.2 (deterministic)
 """
 
 import json
-from agents.base import BaseAgent
+try:
+    from backend.agents.base import BaseAgent
+except ImportError:
+    from agents.base import BaseAgent
 
 
 class MapperAgent(BaseAgent):
