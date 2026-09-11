@@ -5,7 +5,7 @@ const buildApiUrl = (path) => `${API_BASE_URL}${path}`;
 const safeJsonParse = (value) => {
   try {
     return JSON.parse(value);
-  } catch (error) {
+  } catch {
     return null;
   }
 };
@@ -123,6 +123,7 @@ export const rerank = async (domain, intent, sessionDNA, overrides = {}) =>
   requestJson(`/api/rerank/${domain}`, {
     method: 'POST',
     body: JSON.stringify({
+      message: intent,
       intent,
       session_dna: sessionDNA || {},
       overrides: overrides || {},

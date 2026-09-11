@@ -3,7 +3,9 @@ import { checkHealth, streamDebate } from '../api/client';
 const STAGE_ALIAS_MAP = {
   optimizer: 'optimizer',
   optimise: 'optimizer',
+  mapper: 'optimizer',
   advocate: 'advocate',
+  investigator: 'advocate',
   adversary: 'advocate',
   devil: 'advocate',
   devils_advocate: 'advocate',
