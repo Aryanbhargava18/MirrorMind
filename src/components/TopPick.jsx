@@ -1,5 +1,4 @@
 import { ChevronDown, ChevronUp, Trophy } from 'lucide-react';
-import { useState } from 'react';
 
 export default function TopPick({ question }) {
   if (!question) return null;

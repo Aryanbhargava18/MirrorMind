@@ -1,21 +1,23 @@
-import { useEffect, useState } from 'react';
 import AgentCard from './AgentCard';
 import { Loader2 } from 'lucide-react';
 
 export default function AgentDebate({ query, trace, activeStage }) {
-  const [confidence, setConfidence] = useState(0);
-
   // Derive which agents are complete based on trace data
   const isComplete = (stage) => !!trace?.[stage];
   
-  // Progress calculation via pure CSS transition mapped to stage
-  useEffect(() => {
-    if (activeStage === 'optimizer') setConfidence(25);
-    else if (activeStage === 'advocate') setConfidence(50);
-    else if (activeStage === 'personalizer') setConfidence(75);
-    else if (activeStage === 'synthesis') setConfidence(95);
-    if (isComplete('synthesis')) setConfidence(100);
-  }, [activeStage, trace]);
+  // Progress calculation mapped to active stage
+  let confidence = 0;
+  if (isComplete('synthesis')) {
+    confidence = 100;
+  } else if (activeStage === 'synthesis') {
+    confidence = 95;
+  } else if (activeStage === 'personalizer') {
+    confidence = 75;
+  } else if (activeStage === 'advocate') {
+    confidence = 50;
+  } else if (activeStage === 'optimizer') {
+    confidence = 25;
+  }
 
   // Handle data extraction for cards
   const extractData = (stage) => {

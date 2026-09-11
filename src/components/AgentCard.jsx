@@ -52,8 +52,6 @@ export default function AgentCard({ role, isActive, isComplete, data }) {
         setStatusIdx(prev => (prev + 1) % (config.states.length - 1));
       }, 2000);
       return () => clearInterval(interval);
-    } else if (isComplete) {
-      setStatusIdx(config.states.length - 1);
     }
   }, [isActive, isComplete, config.states.length]);
 

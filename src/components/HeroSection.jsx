@@ -2,19 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Sparkles } from 'lucide-react';
 import DecisionInput from './DecisionInput';
 
+const SUB_TAGLINES = [
+  "Spot your blind spots.",
+  "Find what you're not asking.",
+  "See the reasoning behind your reasoning."
+];
+
 export default function HeroSection({ onSubmit }) {
   const headlineRef = useRef(null);
-
   const [subTaglineIndex, setSubTaglineIndex] = useState(0);
-  const subTaglines = [
-    "Spot your blind spots.",
-    "Find what you're not asking.",
-    "See the reasoning behind your reasoning."
-  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSubTaglineIndex((prev) => (prev + 1) % subTaglines.length);
+      setSubTaglineIndex((prev) => (prev + 1) % SUB_TAGLINES.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -100,7 +100,7 @@ export default function HeroSection({ onSubmit }) {
         {/* Subtitle */}
         <p className="font-sans text-base md:text-lg text-[var(--text-secondary)] mb-10 max-w-lg mx-auto leading-relaxed h-[60px] flex items-center justify-center">
           <span className="typewriter-text" key={subTaglineIndex}>
-            {subTaglines[subTaglineIndex]}
+            {SUB_TAGLINES[subTaglineIndex]}
           </span>
         </p>
         

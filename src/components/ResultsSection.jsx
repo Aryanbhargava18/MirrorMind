@@ -6,7 +6,7 @@ import { Copy, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import { useToast } from './Toast';
 
-export default function ResultsSection({ results, trace, sessionId }) {
+export default function ResultsSection({ trace, sessionId }) {
   const showToast = useToast();
   if (!trace) return null;
 
