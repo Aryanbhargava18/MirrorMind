@@ -72,6 +72,20 @@ def test_rerank_with_intent_payload():
     assert "trace" in data
 
 
+def test_rerank_with_empty_payload():
+    res = client.post(
+        "/api/rerank/general",
+        json={
+            "intent": "",
+            "message": "",
+        },
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert "session_id" in data
+
+
+
 def test_analyze_request_whitespace_trimming():
     from backend.main import AnalyzeRequest
     req = AnalyzeRequest(message="   I am choosing between two offers   ")
