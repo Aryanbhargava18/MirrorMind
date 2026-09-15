@@ -44,9 +44,9 @@ SESSION_STORE: dict[str, dict[str, Any]] = {}
 class AnalyzeRequest(BaseModel):
     message: str = Field(default="")
     intent: str | None = Field(default=None)
-    session_dna: dict = Field(default_factory=dict)
+    session_dna: dict[str, Any] = Field(default_factory=dict)
     has_results: bool = False
-    overrides: dict = Field(default_factory=dict)
+    overrides: dict[str, Any] = Field(default_factory=dict)
 
     def get_query(self) -> str:
         return (self.message or self.intent or "").strip()
