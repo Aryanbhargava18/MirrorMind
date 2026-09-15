@@ -92,6 +92,18 @@ def test_analyze_request_whitespace_trimming():
     assert req.get_query() == "I am choosing between two offers"
 
 
+def test_analyze_request_defaults():
+    from backend.main import AnalyzeRequest
+    req = AnalyzeRequest()
+    assert req.message == ""
+    assert req.intent is None
+    assert req.session_dna == {}
+    assert req.has_results is False
+    assert req.overrides == {}
+    assert req.get_query() == ""
+
+
+
 def test_has_api_key_helper():
     from backend.config import has_api_key, LLM_PROVIDER
     # should return bool consistent with LLM_PROVIDER
