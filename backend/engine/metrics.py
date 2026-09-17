@@ -144,3 +144,5 @@ class MetricsCollector:
         }
 
 # Percentiles (p50 and p95) are computed using exact nearest-rank sorting over in-memory history
+
+# History deque bounds memory to MAX_HISTORY entries preventing memory growth
