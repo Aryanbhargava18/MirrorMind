@@ -96,3 +96,9 @@ def test_metrics_p50_p95_bounds():
     agg = collector.get_aggregates()
     assert agg["latency"]["avg_ms"] == 150.0
 
+
+def test_metrics_empty_latency_handling():
+    collector = MetricsCollector()
+    agg = collector.get_aggregates()
+    assert agg["total_requests"] == 0
+
