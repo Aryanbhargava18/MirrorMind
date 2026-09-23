@@ -111,3 +111,12 @@ def test_has_api_key_helper():
     assert has_api_key() == expected
 
 
+def test_is_valid_query_helper():
+    from backend.main import is_valid_query
+    assert is_valid_query("Valid query here") is True
+    assert is_valid_query("") is False
+    assert is_valid_query("   ") is False
+    assert is_valid_query("!@#$%^&*") is False
+
+
+
