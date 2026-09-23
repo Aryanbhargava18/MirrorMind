@@ -56,6 +56,12 @@ def _format_sse(event_name: str, payload: dict) -> str:
     return f"event: {event_name}\ndata: {json.dumps(payload, ensure_ascii=False)}\n\n"
 
 
+def is_valid_query(query: str) -> bool:
+    """Check if query is non-empty and contains alphanumeric characters."""
+    return bool(query and query.strip() and any(c.isalnum() for c in query))
+
+
+
 async def _collect_results(domain: str, request: AnalyzeRequest) -> dict:
     final_payload = None
     query = request.get_query()
