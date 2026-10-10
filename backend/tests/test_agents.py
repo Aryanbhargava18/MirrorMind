@@ -73,3 +73,10 @@ def test_investigator_fallback_structure():
     res = agent.fallback("test")
     assert "biases" in res
 
+
+def test_mapper_assumptions_list():
+    from backend.agents.mapper import MapperAgent
+    agent = MapperAgent()
+    res = agent.fallback("testing assumptions")
+    assert "assumptions" in res
+
