@@ -52,3 +52,5 @@ Map the reasoning into claims, values, and assumptions."""
             "decision_type": "Other",
             "_fallback": True,
         }
+
+# Mapper isolates factual claims from personal values and underlying assumptions
