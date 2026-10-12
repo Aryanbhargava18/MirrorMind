@@ -76,3 +76,16 @@ def test_evaluator_custom_threshold():
     assert custom_eval.max_passes == 3
     assert custom_eval.quality_threshold == 0.80
 
+
+def test_evaluator_empty_user_input(evaluator):
+    trace = {
+        "optimizer": {},
+        "advocate": {},
+        "personalizer": {},
+        "synthesis": {},
+    }
+    result = evaluator.evaluate(trace, "")
+    assert result["passed"] is False
+    assert len(result["failures"]) > 0
+
+
