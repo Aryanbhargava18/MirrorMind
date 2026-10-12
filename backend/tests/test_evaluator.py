@@ -69,3 +69,10 @@ def test_evaluator_fallback_trace_fails(evaluator):
     assert result["score"] < 0.65
     assert result["passed"] is False
     assert len(result["failures"]) > 0
+
+
+def test_evaluator_custom_threshold():
+    custom_eval = KarpathyEvaluator(max_passes=3, quality_threshold=0.80)
+    assert custom_eval.max_passes == 3
+    assert custom_eval.quality_threshold == 0.80
+
