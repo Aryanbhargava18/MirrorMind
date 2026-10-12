@@ -120,7 +120,10 @@ class KarpathyEvaluator:
     def _score_investigator(
         self, investigator: dict, user_input: str, failures: list
     ) -> float:
-        """Score investigator evidence-binding quality."""
+        """Score investigator evidence-binding quality. Handles empty user input safely."""
+        if not user_input:
+            failures.append("investigator_empty_input")
+            return 0.0
         if investigator.get("_fallback"):
             failures.append("investigator_used_fallback")
             return 0.0
