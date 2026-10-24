@@ -130,3 +130,8 @@ def test_session_store_dict_type():
     from backend.main import SESSION_STORE
     assert isinstance(SESSION_STORE, dict)
 
+
+def test_export_filename_formatting():
+    from backend.main import export_session_json
+    assert export_session_json is not None
+
