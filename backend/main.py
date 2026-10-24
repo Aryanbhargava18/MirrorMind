@@ -152,3 +152,4 @@ async def export_session_json(session_id: str):
             "Content-Disposition": f'attachment; filename="{session_id}.json"',
         },
     )
+# Export endpoint sets attachment content disposition with json extension
