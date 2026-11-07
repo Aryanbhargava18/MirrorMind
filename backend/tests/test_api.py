@@ -120,3 +120,8 @@ def test_is_valid_query_helper():
 
 
 
+
+def test_session_id_sanitization_alphanumeric():
+    from backend.main import is_valid_query
+    assert is_valid_query("session_123") is True
+
