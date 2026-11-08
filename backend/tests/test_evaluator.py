@@ -108,3 +108,34 @@ def test_evaluator_score_range():
     evaluator = KarpathyEvaluator()
     assert 0.0 <= evaluator.quality_threshold <= 1.0
 
+
+
+def test_evaluator_empty_string_input():
+    evaluator = KarpathyEvaluator()
+    trace = {"synthesizer": {"output": ""}}
+    result = evaluator.evaluate(trace, "")
+    assert isinstance(result, dict)
+    assert result["passed"] is False
+
+
+def test_evaluator_whitespace_only_input():
+    evaluator = KarpathyEvaluator()
+    trace = {"synthesizer": {"output": "   \n\t  "}}
+    result = evaluator.evaluate(trace, "")
+    assert result["passed"] is False
+    assert len(result["failures"]) > 0
+
+
+def test_evaluator_custom_threshold_bounds():
+    evaluator_low = KarpathyEvaluator(quality_threshold=0.1)
+    evaluator_high = KarpathyEvaluator(quality_threshold=0.95)
+    assert evaluator_low.quality_threshold == 0.1
+    assert evaluator_high.quality_threshold == 0.95
+
+
+def test_evaluator_unicode_prompt_handling():
+    evaluator = KarpathyEvaluator()
+    trace = {"synthesizer": {"output": "Bonjour le monde! こんにちは世界! Привет мир!"}}
+    result = evaluator.evaluate(trace, "Multilingual prompt")
+    assert isinstance(result, dict)
+    assert "passed" in result

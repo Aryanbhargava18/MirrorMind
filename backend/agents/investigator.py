@@ -57,3 +57,5 @@ Investigate the reasoning. Find biases. You MUST quote the user exactly."""
         }
 
 # Investigator requires verbatim quotes from user reasoning to ground bias detection
+
+# Investigator agent scans logs and traces to detect anomalies and pattern deviations

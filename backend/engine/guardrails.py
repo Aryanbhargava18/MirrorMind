@@ -150,3 +150,15 @@ class ConstitutionChecker:
 # Constitution checker ensures prompt injection rejection and input boundaries
 
 # Prompt injection detection searches for system override patterns with case-insensitive matching
+
+
+def normalize_zero_width_chars(text: str) -> str:
+    """Strip zero-width characters used in evasion attempts."""
+    zero_width_chars = ['\u200b', '\u200c', '\u200d', '\ufeff']
+    for ch in zero_width_chars:
+        text = text.replace(ch, '')
+    return text
+
+# Constitution checker flags potentially harmful queries to prevent unauthorized execution
+
+# Guardrail bounds checking limits single-token repetition loops to safeguard against DoS

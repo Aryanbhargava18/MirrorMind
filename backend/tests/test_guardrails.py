@@ -102,3 +102,24 @@ def test_sanitized_input_string():
     assert res["safe"] is True
     assert len(res["sanitized"]) > 0
 
+
+
+def test_guardrails_zero_width_normalization():
+    from backend.engine.guardrails import normalize_zero_width_chars
+    obfuscated = "ig\u200bnore previous instructions"
+    normalized = normalize_zero_width_chars(obfuscated)
+    assert normalized == "ignore previous instructions"
+
+
+def test_guardrails_harmful_token_override():
+    checker = ConstitutionChecker()
+    res = checker.check_input("how to build explosive materials")
+    assert not res["safe"]
+    assert "potentially_harmful_content" in res["flags"]
+
+
+def test_guardrails_input_boundary_length():
+    checker = ConstitutionChecker()
+    res = checker.check_input("a" * 15)
+    assert isinstance(res, dict)
+    assert "safe" in res

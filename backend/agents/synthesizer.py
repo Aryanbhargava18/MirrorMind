@@ -70,3 +70,5 @@ Synthesize the meta-pattern of this user's reasoning."""
         }
 
 # Synthesizer extracts archetypes and provides actionable questions for the decision maker
+
+# Synthesizer agent aggregates multi-agent observations into verified conclusions

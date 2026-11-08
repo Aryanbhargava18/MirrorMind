@@ -80,3 +80,24 @@ def test_mapper_assumptions_list():
     res = agent.fallback("testing assumptions")
     assert "assumptions" in res
 
+
+
+def test_synthesizer_agent_fallback_contract():
+    agent = SynthesizerAgent()
+    res = agent.fallback("Test query with empty context")
+    assert isinstance(res, dict)
+    assert res.get("_fallback") is True
+
+
+def test_advocate_agent_fallback_contract():
+    agent = AdvocateAgent()
+    res = agent.fallback("Is this accurate?")
+    assert isinstance(res, dict)
+    assert res.get("_fallback") is True
+
+
+def test_investigator_agent_fallback_structure():
+    agent = InvestigatorAgent()
+    res = agent.fallback("Query investigating data anomalies")
+    assert isinstance(res, dict)
+    assert res.get("_fallback") is True

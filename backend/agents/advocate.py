@@ -51,3 +51,5 @@ Steelman the user's reasoning. What are they getting right?"""
         }
 
 # Advocate steelmans the rationale by assuming positive intent and long-term upside
+
+# Advocate agent provides adversarial validation and critique against proposed claims

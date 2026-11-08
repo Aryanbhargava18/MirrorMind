@@ -102,3 +102,18 @@ def test_metrics_empty_latency_handling():
     agg = collector.get_aggregates()
     assert agg["total_requests"] == 0
 
+
+
+def test_calculate_percentile_utility():
+    from backend.engine.metrics import calculate_percentile
+    vals = [10.0, 20.0, 30.0, 40.0, 50.0]
+    assert calculate_percentile(vals, 0.5) == 30.0
+    assert calculate_percentile(vals, 0.9) == 50.0
+    assert calculate_percentile([], 0.5) == 0.0
+
+
+def test_metrics_collector_empty_record():
+    collector = MetricsCollector()
+    agg = collector.get_aggregates()
+    assert agg["total_requests"] == 0
+    assert "message" in agg

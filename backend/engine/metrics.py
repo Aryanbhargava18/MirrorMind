@@ -146,3 +146,15 @@ class MetricsCollector:
 # Percentiles (p50 and p95) are computed using exact nearest-rank sorting over in-memory history
 
 # History deque bounds memory to MAX_HISTORY entries preventing memory growth
+
+
+def calculate_percentile(values: list, p: float) -> float:
+    """Calculate nearest-rank percentile p (0.0 to 1.0) from a list of float values."""
+    if not values:
+        return 0.0
+    sorted_vals = sorted(values)
+    k = int(len(sorted_vals) * p)
+    idx = min(max(k, 0), len(sorted_vals) - 1)
+    return round(float(sorted_vals[idx]), 3)
+
+# Empty history safeguard returns zero latencies to avoid division by zero

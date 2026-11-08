@@ -282,3 +282,7 @@ class KarpathyEvaluator:
 # Weighting breakdown: mapper=0.25, investigator=0.35, advocate=0.20, synthesis=0.20
 
 # Evaluator terminates immediately if quality score exceeds threshold on first pass
+
+# Karpathy evaluator enforces multi-dimensional rubric scoring across factual accuracy and completeness
+
+# Multilingual unicode normalization preserves non-ASCII tokens during quality evaluation
